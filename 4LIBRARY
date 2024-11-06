@@ -1,0 +1,237 @@
+
+mysql> create database library;
+Query OK, 1 row affected (0.11 sec)
+
+mysql> use library;
+Database changed
+mysql> create table Borrower(Rollno int(4),Name varchar(20),DateofIssue date,NameofBook varchar(30),Status varchar(10));
+Query OK, 0 rows affected, 1 warning (1.11 sec)
+
+mysql> insert into Borrower values(14,'Ram','2022-09-19','Operating System','I');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into Borrower values(27,'Soham','2022-07-24','Object Oriented Programming','I');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> 
+mysql> insert into Borrower values(27,'Soham','2022-07-24','Object Oriented Programming','I');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> 
+mysql> 
+mysql> 
+mysql> insert into Borrower values(34,'Mohan','2022-06-12','Microprocessor','I');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into Borrower values(48,'Om','2022-04-19','Mechanics','I');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> 
+mysql> 
+mysql> select * from Borrower;
++--------+-------+-------------+-----------------------------+--------+
+| Rollno | Name  | DateofIssue | NameofBook                  | Status |
++--------+-------+-------------+-----------------------------+--------+
+|     14 | Ram   | 2022-09-19  | Operating System            | I      |
+|     27 | Soham | 2022-07-24  | Object Oriented Programming | I      |
+|     27 | Soham | 2022-07-24  | Object Oriented Programming | I      |
+|     34 | Mohan | 2022-06-12  | Microprocessor              | I      |
+|     48 | Om    | 2022-04-19  | Mechanics                   | I      |
++--------+-------+-------------+-----------------------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> delete from Borrower where Name='Soham';
+Query OK, 2 rows affected (0.10 sec)
+
+mysql> select * from Borrower;
++--------+-------+-------------+------------------+--------+
+| Rollno | Name  | DateofIssue | NameofBook       | Status |
++--------+-------+-------------+------------------+--------+
+|     14 | Ram   | 2022-09-19  | Operating System | I      |
+|     34 | Mohan | 2022-06-12  | Microprocessor   | I      |
+|     48 | Om    | 2022-04-19  | Mechanics        | I      |
++--------+-------+-------------+------------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> insert into Borrower values(48,'Om','2022-04-19','Mechanics','I');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into Borrower values(27,'Soham','2022-07-24','Object Oriented Programming','I');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> select * from Borrower;
++--------+-------+-------------+-----------------------------+--------+
+| Rollno | Name  | DateofIssue | NameofBook                  | Status |
++--------+-------+-------------+-----------------------------+--------+
+|     14 | Ram   | 2022-09-19  | Operating System            | I      |
+|     34 | Mohan | 2022-06-12  | Microprocessor              | I      |
+|     48 | Om    | 2022-04-19  | Mechanics                   | I      |
+|     48 | Om    | 2022-04-19  | Mechanics                   | I      |
+|     27 | Soham | 2022-07-24  | Object Oriented Programming | I      |
++--------+-------+-------------+-----------------------------+--------+
+5 rows in set (0.00 sec)
+
+mysql> delete from Borrower where Name='Om';
+Query OK, 2 rows affected (0.11 sec)
+
+mysql> select * from Borrower;
++--------+-------+-------------+-----------------------------+--------+
+| Rollno | Name  | DateofIssue | NameofBook                  | Status |
++--------+-------+-------------+-----------------------------+--------+
+|     14 | Ram   | 2022-09-19  | Operating System            | I      |
+|     34 | Mohan | 2022-06-12  | Microprocessor              | I      |
+|     27 | Soham | 2022-07-24  | Object Oriented Programming | I      |
++--------+-------+-------------+-----------------------------+--------+
+3 rows in set (0.01 sec)
+
+mysql> insert into Borrower values(48,'Om','2022-04-19','Mechanics','I');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> select * from Borrower;
++--------+-------+-------------+-----------------------------+--------+
+| Rollno | Name  | DateofIssue | NameofBook                  | Status |
++--------+-------+-------------+-----------------------------+--------+
+|     14 | Ram   | 2022-09-19  | Operating System            | I      |
+|     34 | Mohan | 2022-06-12  | Microprocessor              | I      |
+|     27 | Soham | 2022-07-24  | Object Oriented Programming | I      |
+|     48 | Om    | 2022-04-19  | Mechanics                   | I      |
++--------+-------+-------------+-----------------------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> 
+mysql> 
+mysql> create table Fine(Rollno int(4),Date date,Amount int(10));
+Query OK, 0 rows affected, 2 warnings (0.59 sec)
+
+mysql> delimiter //
+mysql> create procedure calc_Fine(in r int(10),in b varchar(30))
+    -> begin
+    -> declare doi date;
+    -> declare diff int(3);
+    -> select DateofIssue into doi from Borrower where Rollno=r and NameofBook=b;
+    -> select datediff(curdate(),doi) into diff;
+    -> if diff>=15 and diff<=30 then
+    -> insert into Fine values(r,curdate(),diff*5);
+    -> end if;
+    -> if diff>30 then
+    -> insert into Fine values(r,curdate(),diff*50);
+    -> end if;
+    -> end//
+Query OK, 0 rows affected, 2 warnings (0.10 sec)
+
+mysql> delimiter //
+mysql> create procedure submit(in r int(2))
+    -> begin
+    -> update Borrower set Status='R' where Rollno=r;
+    -> delete from Fine where Rollno=r;
+    -> end//
+Query OK, 0 rows affected, 1 warning (0.24 sec)
+
+mysql> call calc_Fine(14,'Operating System'); 
+    -> select * from Fine; 
+    -> 
+    -> call calc_Fine(27,'Object Oriented Programming'); 
+    -> call calc_Fine(34,'Microprocessor'); 
+    -> call calc_Fine(48,'Mechanics'); 
+    -> select * from Fine; 
+    -> call submit(14); 
+    -> call submit(27); 
+    -> call submit(48); 
+    -> call submit(34); 
+    -> select * from Fine; 
+    -> 
+    -> select * from Borrower; 
+    -> end//
+Query OK, 1 row affected (0.09 sec)
+
++--------+------------+--------+
+| Rollno | Date       | Amount |
++--------+------------+--------+
+|     14 | 2024-11-06 |  38950 |
++--------+------------+--------+
+1 row in set (0.10 sec)
+
+Query OK, 1 row affected (0.27 sec)
+
+Query OK, 1 row affected (0.40 sec)
+
+Query OK, 1 row affected (0.50 sec)
+
++--------+------------+--------+
+| Rollno | Date       | Amount |
++--------+------------+--------+
+|     14 | 2024-11-06 |  38950 |
+|     27 | 2024-11-06 |  41800 |
+|     34 | 2024-11-06 |  43900 |
+|     48 | 2024-11-06 |  46600 |
++--------+------------+--------+
+4 rows in set (0.50 sec)
+
+Query OK, 1 row affected (0.77 sec)
+
+Query OK, 1 row affected (0.96 sec)
+
+Query OK, 1 row affected (1.17 sec)
+
+Query OK, 1 row affected (1.34 sec)
+
+Empty set (1.34 sec)
+
++--------+-------+-------------+-----------------------------+--------+
+| Rollno | Name  | DateofIssue | NameofBook                  | Status |
++--------+-------+-------------+-----------------------------+--------+
+|     14 | Ram   | 2022-09-19  | Operating System            | R      |
+|     34 | Mohan | 2022-06-12  | Microprocessor              | R      |
+|     27 | Soham | 2022-07-24  | Object Oriented Programming | R      |
+|     48 | Om    | 2022-04-19  | Mechanics                   | R      |
++--------+-------+-------------+-----------------------------+--------+
+4 rows in set (1.34 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'end' at line 1
+mysql> call calc_Fine(14,'Operating System');  select * from Fine;   call calc_Fine(27,'Object Oriented Programming');  call calc_Fine(34,'Microprocessor');  call calc_Fine(48,'Mechanics');  select * from Fine;  call submit(14);  call submit(27);  call submit(48);  call submit(34);  select * from Fine;   select *
+from Borrower;  //
+Query OK, 1 row affected (0.06 sec)
+
++--------+------------+--------+
+| Rollno | Date       | Amount |
++--------+------------+--------+
+|     14 | 2024-11-06 |  38950 |
++--------+------------+--------+
+1 row in set (0.06 sec)
+
+Query OK, 1 row affected (0.13 sec)
+
+Query OK, 1 row affected (0.20 sec)
+
+Query OK, 1 row affected (0.30 sec)
+
++--------+------------+--------+
+| Rollno | Date       | Amount |
++--------+------------+--------+
+|     14 | 2024-11-06 |  38950 |
+|     27 | 2024-11-06 |  41800 |
+|     34 | 2024-11-06 |  43900 |
+|     48 | 2024-11-06 |  46600 |
++--------+------------+--------+
+4 rows in set (0.30 sec)
+
+Query OK, 1 row affected (0.42 sec)
+
+Query OK, 1 row affected (0.52 sec)
+
+Query OK, 1 row affected (0.64 sec)
+
+Query OK, 1 row affected (0.75 sec)
+
+Empty set (0.75 sec)
+
++--------+-------+-------------+-----------------------------+--------+
+| Rollno | Name  | DateofIssue | NameofBook                  | Status |
++--------+-------+-------------+-----------------------------+--------+
+|     14 | Ram   | 2022-09-19  | Operating System            | R      |
+|     34 | Mohan | 2022-06-12  | Microprocessor              | R      |
+|     27 | Soham | 2022-07-24  | Object Oriented Programming | R      |
+|     48 | Om    | 2022-04-19  | Mechanics                   | R      |
++--------+-------+-------------+-----------------------------+--------+
+4 rows in set (0.75 sec)
+
