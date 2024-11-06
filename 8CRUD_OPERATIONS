@@ -1,0 +1,211 @@
+
+test> use mongodb_1
+switched to db mongodb_1
+mongodb_1> db.createCollection('student');
+{ ok: 1 }
+mongodb_1> db.student.insert({'rno':1,'name':'shravani','class':'te comp'});
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f265a8626c803f15964033') }
+}
+mongodb_1> db.student.insert({'rno':2,'name':'dhanshri','class':'te comp'});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f265b8626c803f15964034') }
+}
+mongodb_1> db.student.insert({'rno':3,'name':'sumit','class':'te comp'});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f265ca626c803f15964035') }
+}
+mongodb_1> db.student.insert({'rno':4,'name':'meghraj','class':'te comp'});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f265e5626c803f15964036') }
+}
+mongodb_1> db.student.insert({'rno':5,'name':'sakshi','class':'te comp'});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f265fd626c803f15964037') }
+}
+mongodb_1> db.student.insert({'rno':6,'name':'pooja','class':'te comp'});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f26633626c803f15964038') }
+}
+mongodb_1> db.student.find();
+[
+  {
+    _id: ObjectId('66f265a8626c803f15964033'),
+    rno: 1,
+    name: 'shravani',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265b8626c803f15964034'),
+    rno: 2,
+    name: 'dhanshri',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265ca626c803f15964035'),
+    rno: 3,
+    name: 'sumit',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265e5626c803f15964036'),
+    rno: 4,
+    name: 'meghraj',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265fd626c803f15964037'),
+    rno: 5,
+    name: 'sakshi',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f26633626c803f15964038'),
+    rno: 6,
+    name: 'pooja',
+    class: 'te comp'
+  }
+]
+mongodb_1> db.student.find().pretty();
+[
+  {
+    _id: ObjectId('66f265a8626c803f15964033'),
+    rno: 1,
+    name: 'shravani',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265b8626c803f15964034'),
+    rno: 2,
+    name: 'dhanshri',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265ca626c803f15964035'),
+    rno: 3,
+    name: 'sumit',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265e5626c803f15964036'),
+    rno: 4,
+    name: 'meghraj',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265fd626c803f15964037'),
+    rno: 5,
+    name: 'sakshi',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f26633626c803f15964038'),
+    rno: 6,
+    name: 'pooja',
+    class: 'te comp'
+  }
+]
+mongodb_1> show dbs;
+admin       40.00 KiB
+comp       152.00 KiB
+config     108.00 KiB
+local       72.00 KiB
+mongodb_1   72.00 KiB
+mongodb_3  112.00 KiB
+mongodb_1> db.student.update({'name':'sakshi'},{$set:{'name':'kavita'}});
+DeprecationWarning: Collection.update() is deprecated. Use updateOne, updateMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+mongodb_1> db.student.find().pretty();
+[
+  {
+    _id: ObjectId('66f265a8626c803f15964033'),
+    rno: 1,
+    name: 'shravani',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265b8626c803f15964034'),
+    rno: 2,
+    name: 'dhanshri',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265ca626c803f15964035'),
+    rno: 3,
+    name: 'sumit',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265e5626c803f15964036'),
+    rno: 4,
+    name: 'meghraj',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265fd626c803f15964037'),
+    rno: 5,
+    name: 'kavita',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f26633626c803f15964038'),
+    rno: 6,
+    name: 'pooja',
+    class: 'te comp'
+  }
+]
+mongodb_1> db.student.remove({'ADD':'MP'});
+DeprecationWarning: Collection.remove() is deprecated. Use deleteOne, deleteMany, findOneAndDelete, or bulkWrite.
+{ acknowledged: true, deletedCount: 0 }
+mongodb_1> db.student.remove({'name':'sumit'},1);
+{ acknowledged: true, deletedCount: 1 }
+mongodb_1> db.student.find().pretty();
+[
+  {
+    _id: ObjectId('66f265a8626c803f15964033'),
+    rno: 1,
+    name: 'shravani',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265b8626c803f15964034'),
+    rno: 2,
+    name: 'dhanshri',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265e5626c803f15964036'),
+    rno: 4,
+    name: 'meghraj',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f265fd626c803f15964037'),
+    rno: 5,
+    name: 'kavita',
+    class: 'te comp'
+  },
+  {
+    _id: ObjectId('66f26633626c803f15964038'),
+    rno: 6,
+    name: 'pooja',
+    class: 'te comp'
+  }
+]
+mongodb_1> db.student.drop();
+true
+mongodb_1> db.student.find().pretty();
+
