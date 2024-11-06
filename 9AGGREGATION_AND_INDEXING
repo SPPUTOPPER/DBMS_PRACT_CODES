@@ -1,0 +1,173 @@
+icoer@icoer-Vostro-3470:~$ mongosh
+Current Mongosh Log ID:	66f2530f5ffd406514964032
+Connecting to:		mongodb://127.0.0.1:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.1
+Using MongoDB:		7.0.14
+Using Mongosh:		2.3.1
+
+For mongosh info see: https://www.mongodb.com/docs/mongodb-shell/
+
+------
+   The server generated these startup warnings when booting
+   2024-09-24T10:56:21.764+05:30: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+   2024-09-24T10:56:23.885+05:30: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+------
+
+test> use comp;
+switched to db comp
+comp> db.createCollection('website');
+{ ok: 1 }
+comp> db.website.insert({'roll':'1','name':'shravani','amount':1000,'url':'www.yahoo.com'});
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f253d55ffd406514964033') }
+}
+comp> db.website.insert({'roll':'2','name':'dhanshri','amount':2000,'url':'www.yahoo.com'});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f254135ffd406514964034') }
+}
+comp> db.website.insert({'roll':'3','name':'sumit','amount':3000,'url':'www.yahoo.com'});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f254475ffd406514964035') }
+}
+comp> db.website.insert({'roll':'4','name':'meghraj','amount':4000,'url':'www.yahoo.com'});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f2546a5ffd406514964036') }
+}
+comp> db.website.insert({'roll':'5','name':'sakshi','amount':1000,'url':'www.yahoo.com'});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f2549d5ffd406514964037') }
+}
+comp> db.website.aggregate({$group:{_id:"$name","total":{$sum:"$amount"}}});
+[
+  { _id: 'shravani', total: 1000 },
+  { _id: 'dhanshri', total: 2000 },
+  { _id: 'sakshi', total: 1000 },
+  { _id: 'meghraj', total: 4000 },
+  { _id: 'sumit', total: 3000 }
+]
+comp> db.website.aggregate({$group:{_id:"$name","total":{$avg:"$amount"}}});
+[
+  { _id: 'dhanshri', total: 2000 },
+  { _id: 'meghraj', total: 4000 },
+  { _id: 'sumit', total: 3000 },
+  { _id: 'sakshi', total: 1000 },
+  { _id: 'shravani', total: 1000 }
+]
+comp> db.website.aggregate({$group:{_id:"$name","total":{$min:"$amount"}}});
+[
+  { _id: 'dhanshri', total: 2000 },
+  { _id: 'shravani', total: 1000 },
+  { _id: 'sakshi', total: 1000 },
+  { _id: 'meghraj', total: 4000 },
+  { _id: 'sumit', total: 3000 }
+]
+comp> db.website.aggregate({$group:{_id:"$name","total":{$max:"$amount"}}});
+[
+  { _id: 'dhanshri', total: 2000 },
+  { _id: 'meghraj', total: 4000 },
+  { _id: 'sumit', total: 3000 },
+  { _id: 'sakshi', total: 1000 },
+  { _id: 'shravani', total: 1000 }
+]
+comp> db.website.aggregate({$group:{_id:"$name","total":{$first:"$amount"}}});
+[
+  { _id: 'dhanshri', total: 2000 },
+  { _id: 'shravani', total: 1000 },
+  { _id: 'sumit', total: 3000 },
+  { _id: 'meghraj', total: 4000 },
+  { _id: 'sakshi', total: 1000 }
+]
+comp> db.website.aggregate({$group:{_id:"$name","total":{$last:"$amount"}}});
+[
+  { _id: 'dhanshri', total: 2000 },
+  { _id: 'meghraj', total: 4000 },
+  { _id: 'sumit', total: 3000 },
+  { _id: 'sakshi', total: 1000 },
+  { _id: 'shravani', total: 1000 }
+]
+comp> db.website.aggregate({$group:{_id:"$name","total":{$push:"$amount"}}});
+[
+  { _id: 'shravani', total: [ 1000 ] },
+  { _id: 'dhanshri', total: [ 2000 ] },
+  { _id: 'sakshi', total: [ 1000 ] },
+  { _id: 'meghraj', total: [ 4000 ] },
+  { _id: 'sumit', total: [ 3000 ] }
+]
+comp> db.website.aggregate({$group:{_id:"$name","total":{$sum:1}}});
+[
+  { _id: 'shravani', total: 1 },
+  { _id: 'dhanshri', total: 1 },
+  { _id: 'sumit', total: 1 },
+  { _id: 'meghraj', total: 1 },
+  { _id: 'sakshi', total: 1 }
+]
+comp> db.website.aggregate({$group:{_id:"$name","total":{$addToSet:"$amount"}}});
+[
+  { _id: 'dhanshri', total: [ 2000 ] },
+  { _id: 'meghraj', total: [ 4000 ] },
+  { _id: 'sumit', total: [ 3000 ] },
+  { _id: 'sakshi', total: [ 1000 ] },
+  { _id: 'shravani', total: [ 1000 ] }
+]
+comp> db.createCollection('website1');
+{ ok: 1 }
+comp> db.website1.insert({'r':1,'name':'harsh'});
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f256db5ffd406514964038') }
+}
+comp> db.website1.find().pretty()
+[ { _id: ObjectId('66f256db5ffd406514964038'), r: 1, name: 'harsh' } ]
+comp> db.website1.createIndex({'name':1})
+name_1
+comp> db.website1.createIndex({'name':-1})
+name_-1
+comp> db.website1.createIndex({'name':-1})
+name_-1
+comp> db.website1.createIndex({'name':-1})
+name_-1
+comp> db.website1.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: 1 }, name: 'name_1' },
+  { v: 2, key: { name: -1 }, name: 'name_-1' }
+]
+comp> db.website1.createIndex({'name':-1})
+name_-1
+comp> db.website1.dropIndex({'name':1})
+{ nIndexesWas: 3, ok: 1 }
+comp> db.website1.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: -1 }, name: 'name_-1' }
+]
+comp> db.website1.find().pretty()
+[ { _id: ObjectId('66f256db5ffd406514964038'), r: 1, name: 'harsh' } ]
+comp> db.website1.createIndex({'name':1})
+name_1
+comp> db.website1.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: -1 }, name: 'name_-1' },
+  { v: 2, key: { name: 1 }, name: 'name_1' }
+]
+comp> db.website1.dropIndex({'name':1})
+{ nIndexesWas: 3, ok: 1 }
+comp> db.website1.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: -1 }, name: 'name_-1' }
+]
+comp> db.website1.createIndex({'name':1,'r':-1})
+name_1_r_-1
+comp> db.website1.getIndexes()
+[
+  { v: 2, key: { _id: 1 }, name: '_id_' },
+  { v: 2, key: { name: -1 }, name: 'name_-1' },
+  { v: 2, key: { name: 1, r: -1 }, name: 'name_1_r_-1' }
+]
