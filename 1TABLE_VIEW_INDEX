@@ -1,0 +1,201 @@
+mysql> create database practical492;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> use practical492;
+Database changed
+mysql> create table client_master(client_no int,client_name varchar(20),address varchar(50),city varchar(10),pincode int,state varchar(20), bal_due float,primary key(client_no));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>  insert into client_master values('1','shravani','sangamner','ahmednagar','422605','MH','5000');
+Query OK, 1 row affected (0.01 sec)
+mysql> insert into client_master values('2','dhanshri','bhusawal','jalgaon','422004','MH','10000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into client_master values ('3','sumit','yeola','nashik','422013','MH','15000');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into client_master values ('4','meghraj','shivpur','nanded','422023','MH','12000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select* from client_master;
++-----------+-------------+-----------+------------+---------+-------+---------+
+| client_no | client_name | address   | city       | pincode | state | bal_due |
++-----------+-------------+-----------+------------+---------+-------+---------+
+|         1 | shravani    | sangamner | ahmednagar |  422605 | MH    |    5000 |
+|         2 | dhanshri    | bhusawal  | jalgaon    |  422004 | MH    |   10000 |
+|         3 | sumit       | yeola     | nashik     |  422013 | MH    |   15000 |
+|         4 | meghraj     | shivpur   | nanded     |  422023 | MH    |   12000 |
++-----------+-------------+-----------+------------+---------+-------+---------+
+4 rows in set (0.00 sec)
+mysql> select client_name,client_no from client_master;
++-------------+-----------+
+| client_name | client_no |
++-------------+-----------+
+| shravani    |         1 |
+| dhanshri    |         2 |
+| sumit       |         3 |
+| meghraj     |         4 |
++-------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> insert into client_master values ('5','srushti','satara','satara','41
+5002','MH','10000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  create table product_master(product_no int,description varchar(20),profit_per float,unit_measure varchar(10),quantity int,reorder int,sell_price float,cost_price float,primary  key(product_no));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into product_master values('1','shampoo','1','one','4','2','10','15');
+Query OK, 1 row affected (0.01 sec)
+mysql> insert into product_master values('2','oil','13','one','4','2','11','16');
+Query OK, 1 row affected (0.01 sec)
+mysql> select* from client_master;
++-----------+-------------+-----------+------------+---------+-------+---------+
+| client_no | client_name | address   | city       | pincode | state | bal_due |
++-----------+-------------+-----------+------------+---------+-------+---------+
+|         1 | shravani    | sangamner | ahmednagar |  422605 | MH    |    5000 |
+|         2 | dhanshri    | bhusawal  | jalgaon    |  422004 | MH    |   10000 |
+|         3 | sumit       | yeola     | nashik     |  422013 | MH    |   15000 |
+|         4 | meghraj     | shivpur   | nanded     |  422023 | MH    |   12000 |
+|         5 | srushti     | satara    | satara     |  415002 | MH    |   10000 |
++-----------+-------------+-----------+------------+---------+-------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select* from product_master;
++------------+-------------+------------+--------------+----------+---------+------------+------------+
+| product_no | description | profit_per | unit_measure | quantity | reorder | sell_price | cost_price |
++------------+-------------+------------+--------------+----------+---------+------------+------------+
+|          1 | shampoo     |          1 | one          |        4 |       2 |         10 |         15 |
+|          2 | oil         |         13 | one          |        4 |       2 |         11 |         16 |
++------------+-------------+------------+--------------+----------+---------+------------+------------+
+2 rows in set (0.00 sec)
+
+mysql> create index client_search on client_master(client_no);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>  create table auto(roll_no int NOT NULL AUTO_INCREMENT,name varchar(20),primary key(roll_no));
+Query OK, 0 rows affected (0.03 sec)
+mysql> select * from auto;
+mysql>  insert into auto values('1','sakshi');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into auto values('2','vaibhavi');
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  alter table auto auto_increment=100;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>  select * from auto;
++---------+----------+
+| roll_no | name     |
++---------+----------+
+|       1 | sakshi   |
+|       2 | vaibhavi |
++---------+----------+
+2 rows in set (0.00 sec)
+
+mysql>  insert into auto values(null,'disha');
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  insert into auto values(null,'kshitija');
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  select * from auto;
++---------+----------+
+| roll_no | name     |
++---------+----------+
+|       1 | sakshi   |
+|       2 | vaibhavi |
+|     100 | disha    |
+|     101 | kshitija |
++---------+----------+
+4 rows in set (0.00 sec)
+mysql>update client_master set client_name="vaishnavi" where client_no='3';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+mysql>update client_master set client_name="vaishnavi" where client_no='4';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+mysql>  select * from client_master;
++-----------+-------------+-----------+------------+---------+-------+---------+
+| client_no | client_name | address   | city       | pincode | state | bal_due |
++-----------+-------------+-----------+------------+---------+-------+---------+
+|         1 | shravani    | sangamner | ahmednagar |  422605 | MH    |    5000 |
+|         2 | dhanshri    | bhusawal  | jalgaon    |  422004 | MH    |   10000 |
+|         3 | vaishnavi   | yeola     | nashik     |  422013 | MH    |   15000 |
+|         4 | meghraj     | shivpur   | nanded     |  422023 | MH    |   12000 |
+|         5 | srushti     | satara    | satara     |  415002 | MH    |   10000 |
++-----------+-------------+-----------+------------+---------+-------+---------+
+5 rows in set (0.00 sec)
+mysql>  create index client_find on
+    -> client_master(client_name,city);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show tables;
++------------------------+
+| Tables_in_practical492 |
++------------------------+
+| auto                   |
+| client_master          |
+| product_master         |
++------------------------+
+3 rows in set (0.01 sec)
+
+mysql>  select * from product_master;
++------------+-------------+------------+--------------+----------+---------+------------+------------+
+| product_no | description | profit_per | unit_measure | quantity | reorder | sell_price | cost_price |
++------------+-------------+------------+--------------+----------+---------+------------+------------+
+|          1 | shampoo     |          1 | one          |        4 |       2 |         10 |         15 |
+|          2 | oil         |         13 | one          |        4 |       2 |         11 |         16 |
++------------+-------------+------------+--------------+----------+---------+------------+------------+
+2 rows in set (0.00 sec)
+
+mysql>  desc product_master;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| product_no   | int         | NO   | PRI | NULL    |       |
+| description  | varchar(20) | YES  |     | NULL    |       |
+| profit_per   | float       | YES  |     | NULL    |       |
+| unit_measure | varchar(10) | YES  |     | NULL    |       |
+| quantity     | int         | YES  |     | NULL    |       |
+| reorder      | int         | YES  |     | NULL    |       |
+| sell_price   | float       | YES  |     | NULL    |       |
+| cost_price   | float       | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+mysql>  insert into product_master
+    -> values('003','nutela','15','three','40','5','110','123');
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  alter table product_master modify sell_price
+    -> float(10,2);
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+mysql> desc product_master;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| product_no   | int         | NO   | PRI | NULL    |       |
+| description  | varchar(20) | YES  |     | NULL    |       |
+| profit_per   | float       | YES  |     | NULL    |       |
+| unit_measure | varchar(10) | YES  |     | NULL    |       |
+| quantity     | int         | YES  |     | NULL    |       |
+| reorder      | int         | YES  |     | NULL    |       |
+| sell_price   | float(10,2) | YES  |     | NULL    |       |
+| cost_price   | float       | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+mysql> select* from auto;
++---------+----------+
+| roll_no | name     |
++---------+----------+
+|       1 | sakshi   |
+|       2 | vaibhavi |
+|     100 | disha    |
+|     101 | kshitija |
++---------+----------+
+4 rows in set (0.00 sec)
