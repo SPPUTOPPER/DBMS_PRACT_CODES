@@ -1,0 +1,76 @@
+
+test> use mongodb_3
+switched to db mongodb_3
+mongodb_3> db.createCollection('journal');
+{ ok: 1 }
+mongodb_3> db.journal.insert({'book_id':1,book_name:'javacd','amt':500,'status':'available'})
+DeprecationWarning: Collection.insert() is deprecated. Use insertOne, insertMany, or bulkWrite.
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f25d5bf977f0a5b7964033') }
+}
+mongodb_3> db.journal.insert({'book_id':2,book_name:'java','amt':300,'status':'not available'})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f25d83f977f0a5b7964034') }
+}
+mongodb_3> db.journal.insert({'book_id':1,book_name:'java','amt':300,'status':'available'})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f25de1f977f0a5b7964035') }
+}
+mongodb_3> db.journal.insert({'book_id':2,book_name:'oop','amt':200,'status':'available'})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f25e2cf977f0a5b7964036') }
+}
+mongodb_3> db.journal.insert({'book_id':2,book_name:'c+','amt':200,'status':'available'})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f25e3ff977f0a5b7964037') }
+}
+mongodb_3> db.journal.insert({'book_id':3,book_name:'c++','amt':150,'status':'available'})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f25e64f977f0a5b7964038') }
+}
+mongodb_3> db.journal.insert({'book_id':3,book_name:'c++','amt':200,'status':'not available'})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f25e7bf977f0a5b7964039') }
+}
+mongodb_3> db.journal.insert({'book_id':4,book_name:'oop c++','amt':200,'status':'not available'})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f25eb3f977f0a5b796403a') }
+}
+mongodb_3> db.journal.insert({'book_id':5,book_name:'oop c++','amt':400,'status':' available'})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f25ed5f977f0a5b796403b') }
+}
+mongodb_3> db.journal.insert({'book_id':5,book_name:' c++','amt':400,'status':' available'})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f25ee8f977f0a5b796403c') }
+}
+mongodb_3> db.journal.insert({'book_id':5,book_name:' c++ java','amt':400,'status':' available'})
+{
+  acknowledged: true,
+  insertedIds: { '0': ObjectId('66f25f52f977f0a5b796403d') }
+}
+mongodb_3> var mapfunction=function(){emit(this.book_id,this.amt)};
+var reducefunction=function(key,value){return Array.sum(value);};
+
+mongodb_3> db.journal.mapReduce(mapfunction,reducefunction,{'out':'new'});
+DeprecationWarning: Collection.mapReduce() is deprecated. Use an aggregation instead.
+See https://docs.mongodb.com/manual/core/map-reduce for details.
+{ result: 'new', ok: 1 }
+mongodb_3> db.new.find().pretty();
+[
+  { _id: 1, value: 800 },
+  { _id: 4, value: 200 },
+  { _id: 3, value: 350 },
+  { _id: 5, value: 1200 },
+  { _id: 2, value: 700 }
+]
