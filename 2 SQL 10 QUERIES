@@ -1,0 +1,363 @@
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| practical491       |
+| practical492       |
+| shravani           |
+| sys                |
++--------------------+
+7 rows in set (0.00 sec)
+mysql> create database practical493;
+Query OK, 1 row affected (0.02 sec)
+mysql> use practical493;
+mysql> create table Employee(emp_no int,emp_name varchar(20),date date,position varchar(20));
+Query OK, 0 rows affected (0.04 sec)
+mysql> alter table Employee add salary int;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+mysql> insert into Employee values('1','shravani','2024-8-1','HR','15000');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Employee values('2','dhanshri','2024-7-12','manager','100
+00');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Employee values('3','meghraj','2024-6-15','ceo','11000');
+
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Employee values('4','sumit','2024-6-15','ceo','12000');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Employee values('5','vaishnavi','2024-5-15','clerk','1000
+0');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Employee values('6','sakshi','2024-3-12','clerk','9000');
+
+Query OK, 1 row affected (0.01 sec)
+mysql>  create table TE(emp_no int,emp_name  varchar(20),join_date date,position varchar(20),salary int);
+Query OK, 0 rows affected (0.03 sec)
+mysql> insert into TE values('1','vaibhavi','2024-7-12','clerk','3000');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into TE values('2','renuka','2024-3-10','ceo','15000');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into TE values('3','samruddhi','2024-2-10','hr','10000');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into TE values('4','shruti','2024-2-10','manager','12000');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into TE values('5','kshitija','2024-2-11','manager','11000');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select* from TE;
++--------+-----------+------------+----------+--------+
+| emp_no | emp_name  | join_date  | position | salary |
++--------+-----------+------------+----------+--------+
+|      1 | vaibhavi  | 2024-07-12 | clerk    |   3000 |
+|      2 | renuka    | 2024-03-10 | ceo      |  15000 |
+|      3 | samruddhi | 2024-02-10 | hr       |  10000 |
+|      4 | shruti    | 2024-02-10 | manager  |  12000 |
+|      5 | kshitija  | 2024-02-11 | manager  |  11000 |
++--------+-----------+------------+----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select* from Employee;
++--------+-----------+------------+----------+--------+
+| emp_no | emp_name  | date       | position | salary |
++--------+-----------+------------+----------+--------+
+|      1 | shravani  | 2024-08-01 | HR       |  15000 |
+|      2 | dhanshri  | 2024-07-12 | manager  |  10000 |
+|      3 | meghraj   | 2024-06-15 | ceo      |  11000 |
+|      4 | sumit     | 2024-06-15 | ceo      |  12000 |
+|      5 | vaishnavi | 2024-05-15 | clerk    |  10000 |
+|      6 | sakshi    | 2024-03-12 | clerk    |   9000 |
++--------+-----------+------------+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> update TE set emp_name='aishwarya' where emp_no='5';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select* from TE;
++--------+-----------+------------+----------+--------+
+| emp_no | emp_name  | join_date  | position | salary |
++--------+-----------+------------+----------+--------+
+|      1 | vaibhavi  | 2024-07-12 | clerk    |   3000 |
+|      2 | renuka    | 2024-03-10 | ceo      |  15000 |
+|      3 | samruddhi | 2024-02-10 | hr       |  10000 |
+|      4 | shruti    | 2024-02-10 | manager  |  12000 |
+|      5 | aishwarya | 2024-02-11 | manager  |  11000 |
++--------+-----------+------------+----------+--------+
+5 rows in set (0.00 sec)
+
+mysql>  select * from Employee union select * from TE;
++--------+-----------+------------+----------+--------+
+| emp_no | emp_name  | date       | position | salary |
++--------+-----------+------------+----------+--------+
+|      1 | shravani  | 2024-08-01 | HR       |  15000 |
+|      2 | dhanshri  | 2024-07-12 | manager  |  10000 |
+|      3 | meghraj   | 2024-06-15 | ceo      |  11000 |
+|      4 | sumit     | 2024-06-15 | ceo      |  12000 |
+|      5 | vaishnavi | 2024-05-15 | clerk    |  10000 |
+|      6 | sakshi    | 2024-03-12 | clerk    |   9000 |
+|      1 | vaibhavi  | 2024-07-12 | clerk    |   3000 |
+|      2 | renuka    | 2024-03-10 | ceo      |  15000 |
+|      3 | samruddhi | 2024-02-10 | hr       |  10000 |
+|      4 | shruti    | 2024-02-10 | manager  |  12000 |
+|      5 | aishwarya | 2024-02-11 | manager  |  11000 |
++--------+-----------+------------+----------+--------+
+11 rows in set (0.00 sec)
+
+mysql>  select * from Employee union all select * from TE;
++--------+-----------+------------+----------+--------+
+| emp_no | emp_name  | date       | position | salary |
++--------+-----------+------------+----------+--------+
+|      1 | shravani  | 2024-08-01 | HR       |  15000 |
+|      2 | dhanshri  | 2024-07-12 | manager  |  10000 |
+|      3 | meghraj   | 2024-06-15 | ceo      |  11000 |
+|      4 | sumit     | 2024-06-15 | ceo      |  12000 |
+|      5 | vaishnavi | 2024-05-15 | clerk    |  10000 |
+|      6 | sakshi    | 2024-03-12 | clerk    |   9000 |
+|      1 | vaibhavi  | 2024-07-12 | clerk    |   3000 |
+|      2 | renuka    | 2024-03-10 | ceo      |  15000 |
+|      3 | samruddhi | 2024-02-10 | hr       |  10000 |
+|      4 | shruti    | 2024-02-10 | manager  |  12000 |
+|      5 | aishwarya | 2024-02-11 | manager  |  11000 |
++--------+-----------+------------+----------+--------+
+11 rows in set (0.00 sec)
+mysql> select distinct emp_no from Employee where emp_no in (select emp_no f
+rom TE);
++--------+
+| emp_no |
++--------+
+|      1 |
+|      2 |
+|      3 |
+|      4 |
+|      5 |
++--------+
+5 rows in set (0.01 sec)
+
+mysql>  select * from Employee;
++--------+-----------+------------+----------+--------+
+| emp_no | emp_name  | date       | position | salary |
++--------+-----------+------------+----------+--------+
+|      1 | shravani  | 2024-08-01 | HR       |  15000 |
+|      2 | dhanshri  | 2024-07-12 | manager  |  10000 |
+|      3 | meghraj   | 2024-06-15 | ceo      |  11000 |
+|      4 | sumit     | 2024-06-15 | ceo      |  12000 |
+|      5 | vaishnavi | 2024-05-15 | clerk    |  10000 |
+|      6 | sakshi    | 2024-03-12 | clerk    |   9000 |
++--------+-----------+------------+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql>  select * from TE;
++--------+-----------+------------+----------+--------+
+| emp_no | emp_name  | join_date  | position | salary |
++--------+-----------+------------+----------+--------+
+|      1 | vaibhavi  | 2024-07-12 | clerk    |   3000 |
+|      2 | renuka    | 2024-03-10 | ceo      |  15000 |
+|      3 | samruddhi | 2024-02-10 | hr       |  10000 |
+|      4 | shruti    | 2024-02-10 | manager  |  12000 |
+|      5 | aishwarya | 2024-02-11 | manager  |  11000 |
++--------+-----------+------------+----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct emp_name from Employee where emp_name in (select emp_
+name from TE);
+Empty set (0.00 sec)
+
+mysql> select * from Employee;
++--------+-----------+------------+----------+--------+
+| emp_no | emp_name  | date       | position | salary |
++--------+-----------+------------+----------+--------+
+|      1 | shravani  | 2024-08-01 | HR       |  15000 |
+|      2 | dhanshri  | 2024-07-12 | manager  |  10000 |
+|      3 | meghraj   | 2024-06-15 | ceo      |  11000 |
+|      4 | sumit     | 2024-06-15 | ceo      |  12000 |
+|      5 | vaishnavi | 2024-05-15 | clerk    |  10000 |
+|      6 | sakshi    | 2024-03-12 | clerk    |   9000 |
++--------+-----------+------------+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql>  select * from TE;
++--------+-----------+------------+----------+--------+
+| emp_no | emp_name  | join_date  | position | salary |
++--------+-----------+------------+----------+--------+
+|      1 | vaibhavi  | 2024-07-12 | clerk    |   3000 |
+|      2 | renuka    | 2024-03-10 | ceo      |  15000 |
+|      3 | samruddhi | 2024-02-10 | hr       |  10000 |
+|      4 | shruti    | 2024-02-10 | manager  |  12000 |
+|      5 | aishwarya | 2024-02-11 | manager  |  11000 |
++--------+-----------+------------+----------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct emp_name from Employee where emp_name in (select emp_name from TE);
+Empty set (0.00 sec)
+
+mysql>  select min(salary) from Employee;
++-------------+
+| min(salary) |
++-------------+
+|        9000 |
++-------------+
+1 row in set (0.01 sec)
+
+mysql> select max(salary) from Employee;
++-------------+
+| max(salary) |
++-------------+
+|       15000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql>  select sum(salary) from Employee;
++-------------+
+| sum(salary) |
++-------------+
+|       67000 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(salary) from Employee;
++-------------+
+| avg(salary) |
++-------------+
+|  11166.6667 |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> select count(salary) from Employee;
++---------------+
+| count(salary) |
++---------------+
+|             6 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> select lcase(emp_no) from Employee;
++---------------+
+| lcase(emp_no) |
++---------------+
+| 1             |
+| 2             |
+| 3             |
+| 4             |
+| 5             |
+| 6             |
++---------------+
+6 rows in set (0.00 sec)
+
+mysql>  select ucase(emp_no) from Employee;
++---------------+
+| ucase(emp_no) |
++---------------+
+| 1             |
+| 2             |
+| 3             |
+| 4             |
+| 5             |
+| 6             |
++---------------+
+6 rows in set (0.01 sec)
+
+mysql>  select lcase(salary) from Employee;
++---------------+
+| lcase(salary) |
++---------------+
+| 15000         |
+| 10000         |
+| 11000         |
+| 12000         |
+| 10000         |
+| 9000          |
++---------------+
+6 rows in set (0.00 sec)
+
+mysql> select mid(emp_no,1,3) from Employee;
++-----------------+
+| mid(emp_no,1,3) |
++-----------------+
+| 1               |
+| 2               |
+| 3               |
+| 4               |
+| 5               |
+| 6               |
++-----------------+
+6 rows in set (0.00 sec)
+
+mysql>  select mid(emp_no,1,3) from Employee;
++-----------------+
+| mid(emp_no,1,3) |
++-----------------+
+| 1               |
+| 2               |
+| 3               |
+| 4               |
+| 5               |
+| 6               |
++-----------------+
+6 rows in set (0.00 sec)
+
+mysql> select mid(emp_no,1,5) from Employee;
++-----------------+
+| mid(emp_no,1,5) |
++-----------------+
+| 1               |
+| 2               |
+| 3               |
+| 4               |
+| 5               |
+| 6               |
++-----------------+
+6 rows in set (0.00 sec)
+
+mysql>  select mid(salary,1,3) from Employee;
++-----------------+
+| mid(salary,1,3) |
++-----------------+
+| 150             |
+| 100             |
+| 110             |
+| 120             |
+| 100             |
+| 900             |
++-----------------+
+6 rows in set (0.00 sec)
+
+mysql>  select mid(salary,1,5) from Employee;
++-----------------+
+| mid(salary,1,5) |
++-----------------+
+| 15000           |
+| 10000           |
+| 11000           |
+| 12000           |
+| 10000           |
+| 9000            |
++-----------------+
+6 rows in set (0.00 sec)
+
+mysql> select mid(emp_no,1,2) from Employee;
++-----------------+
+| mid(emp_no,1,2) |
++-----------------+
+| 1               |
+| 2               |
+| 3               |
+| 4               |
+| 5               |
+| 6               |
++-----------------+
+6 rows in set (0.00 sec)
+
